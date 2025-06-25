@@ -29,7 +29,7 @@ pub struct Doc {
     pages: Vec<Page>
 }
 
-pub fn get_stext_from_filepath(path: String)-> Result<Doc, Box<dyn std::error::Error>> {
+pub fn get_structured_document_from_filepath(path: String)-> Result<Doc, Box<dyn std::error::Error>> {
     let filename: String = path;
     let document = mupdf::Document::open(&filename)?;
 
@@ -128,7 +128,7 @@ mod tests {
     #[test]
     fn it_works() {
         let structured_doc_extracted =
-        get_stext_from_filepath("test_pdfs/DraftTest_02.pdf".into());
+        get_structured_document_from_filepath("test_pdfs/DraftTest_02.pdf".into());
         
         if let Ok(doc) = structured_doc_extracted {
             for page in doc.pages {
