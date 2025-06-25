@@ -45,6 +45,16 @@ A `Line` is a series of `TextFragments` which share the same Y-Value. The fragme
 ## Usage
 
 ```rust
+use mupdf_basic_text_extractor::get_structured_document_from_filepath;
+
 let document: Result<Doc, Box<dyn std::error::Error>> = get_structured_document_from_filepath(path);
+
+for page in document.pages {
+    for line in page.lines {
+        for fragment in line.text_fragments {
+            todo()!
+        }
+    }
+}
 
 ```

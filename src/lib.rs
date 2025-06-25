@@ -32,7 +32,6 @@ pub struct Doc {
 pub fn get_structured_document_from_filepath(path: String)-> Result<Doc, Box<dyn std::error::Error>> {
     let filename: String = path;
     let document = mupdf::Document::open(&filename)?;
-
     let mut new_document: Doc = Doc::default();
 
     for page in document.pages()? {

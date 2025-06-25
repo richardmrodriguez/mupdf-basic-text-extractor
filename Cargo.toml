@@ -3,5 +3,8 @@ name = "mupdf-basic-text-extractor"
 version = "0.1.0"
 edition = "2024"
 
+[lib]
+name = "mupdf_basic_text_extractor"
+
 [dependencies]
 mupdf = "0.5.0"
