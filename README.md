@@ -1,7 +1,12 @@
 # Basic Structured Text Extractor
 
-This crate uses the mupdf bindings to do a very simple structured text extraction.
+This crate uses the [mupdf-rs bindings](https://github.com/messense/mupdf-rs)  to do a very simple structured text extraction. 
 
+## License
+Because of the usage of `mupdf` itself, this extractor is AGPL-Licensed.
+
+
+## Structure
 The structure looks like this for each page --NOTE that font_name is a field, but there doesn't appear to be a way to get the font in the bindings (or, at least I have not properly identified it.)
 
 ```
