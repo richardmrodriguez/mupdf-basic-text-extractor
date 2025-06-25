@@ -3,7 +3,7 @@ name = "mupdf-basic-text-extractor"
 description = "Basic structured text extraction using mupdf-rs."
 version = "0.1.0"
 edition = "2024"
-
+license = "AGPL"
 [lib]
 name = "mupdf_basic_text_extractor"
 
