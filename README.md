@@ -58,3 +58,9 @@ for page in document.pages {
 }
 
 ```
+
+## Hotfix 2025-06-26
+
+MuPDF uses a top-left coordinate system. Not only that, but it was not clear to me what counts as the "local origin" for a text element. The x,y positions now derive directly from the lower-left of the bounding box, and the y-height is calculated as the difference from the page height.
+
+This now reflects the PDF coordinate system, with 0,0 being in the bottom left.

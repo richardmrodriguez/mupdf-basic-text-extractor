@@ -31,8 +31,9 @@ pub fn get_structured_document_from_filepath(path: String)-> Result<Doc, Box<dyn
     let mut new_document: Doc = Doc::default();
 
     for page in document.pages()? {
-        let text_page = page?.to_text_page(TextPageOptions::empty())?;
-        
+        let pageref = page.as_ref();
+        let pagebounds = &pageref.unwrap().bounds()?;
+        let text_page = &page?.to_text_page(TextPageOptions::empty())?;
         let text_blocks = text_page.blocks();
 
         let mut raw_page_fragments = Vec::<Fragment>::default();
@@ -54,8 +55,9 @@ pub fn get_structured_document_from_filepath(path: String)-> Result<Doc, Box<dyn
                     }
 
                     if first_char {
-                        let point = char.origin().clone();
-                        (current_working_fragment.x, current_working_fragment.y) = (point.x as f64, point.y as f64);
+                        current_working_fragment.x = char.quad().ll.x as f64;
+                        current_working_fragment.y = pagebounds.height() as f64 - char.quad().ll.y as f64 ;
+
                         current_working_fragment.font_size = char.size() as f64;
                         current_working_fragment.bbox_width = (char.quad().lr.x - char.quad().ll.x) as f64;
                         current_working_fragment.bbox_height = (char.quad().ur.y - char.quad().lr.y) as f64;
