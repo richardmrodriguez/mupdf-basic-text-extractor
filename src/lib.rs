@@ -1,32 +1,28 @@
 use mupdf::{TextPageOptions};
 
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
-}
-
 #[derive(Default, Debug, PartialEq, Clone)]
 pub struct Fragment {
-    text: String,
-    x: f64,
-    y: f64,
-    font_name: Option<String>,
-    font_size: f64,
-    bbox_width: f64,
-    bbox_height: f64
+    pub text: String,
+    pub x: f64,
+    pub y: f64,
+    pub font_name: Option<String>,
+    pub font_size: f64,
+    pub bbox_width: f64,
+    pub bbox_height: f64
 
 }
 #[derive(Default, Debug, Clone)]
 pub struct Line {
-    text_fragments: Vec<Fragment>
+    pub text_fragments: Vec<Fragment>
 
 }
 #[derive(Default, Debug, Clone)]
 pub struct Page {
-    lines: Vec<Line>
+    pub lines: Vec<Line>
 }
 #[derive(Default, Debug, Clone)]
 pub struct Doc {
-    pages: Vec<Page>
+    pub pages: Vec<Page>
 }
 
 pub fn get_structured_document_from_filepath(path: String)-> Result<Doc, Box<dyn std::error::Error>> {
