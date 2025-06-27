@@ -29,7 +29,7 @@ pub fn get_structured_document_from_filepath(path: String)-> Result<Doc, Box<dyn
     let filename: String = path;
     let document = mupdf::Document::open(&filename)?;
     let mut new_document: Doc = Doc::default();
-
+    
     for page in document.pages()? {
         let pageref = page.as_ref();
         let pagebounds = &pageref.unwrap().bounds()?;
@@ -47,7 +47,19 @@ pub fn get_structured_document_from_filepath(path: String)-> Result<Doc, Box<dyn
 
                 let mut working_frag_reset = false;
                 let mut first_char = true;
+                let mut last_was_whitespace = false;
                 for char in chars {
+                    if let Some(c) = char.char() {
+                        if c.is_whitespace() {
+                            raw_page_fragments.push(current_working_fragment);
+                            current_working_fragment = Fragment::default();
+                            last_was_whitespace = true;
+                            continue;
+                        } else if last_was_whitespace {
+                            working_frag_reset = true;
+                            last_was_whitespace = false;
+                        }
+                    }
 
                     if working_frag_reset {
                         first_char = true;
@@ -65,11 +77,6 @@ pub fn get_structured_document_from_filepath(path: String)-> Result<Doc, Box<dyn
                         first_char = false;
                     }
                     if let Some(ch) = char.char() {
-                        if ch.is_whitespace() {
-                            raw_page_fragments.push(current_working_fragment);
-                            current_working_fragment = Fragment::default();
-                            working_frag_reset = true;
-                        }
                         current_working_fragment.text.push(ch);
                     }
                     
@@ -138,7 +145,7 @@ mod tests {
                     }
                     print!("          ");
                     for frag in line.text_fragments {
-                        print!("{} |", frag.text);
+                        print!("'{}', X:{:?} |", frag.text, frag.x);
                     }
                     println!("");
                 }
