@@ -115,6 +115,7 @@ pub fn get_structured_document_from_filepath(path: String)-> Result<Doc, Box<dyn
         for line in &mut new_page.lines {
             line.text_fragments.sort_by(|a, b| a.x.total_cmp(&b.x));
         }
+        new_page.lines.sort_by(|a, b| b.text_fragments[0].y.total_cmp(&a.text_fragments[0].y)); // should sort lines by y position properly
 
         new_document.pages.push(new_page);
     }
@@ -132,7 +133,7 @@ mod tests {
     #[test]
     fn it_works() {
         let structured_doc_extracted =
-        get_structured_document_from_filepath("test_pdfs/DraftTest_02.pdf".into());
+        get_structured_document_from_filepath("test_pdfs/VCR2L.pdf".into());
         
         if let Ok(doc) = structured_doc_extracted {
             for page in doc.pages {
